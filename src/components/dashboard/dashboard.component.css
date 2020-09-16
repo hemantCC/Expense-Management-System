@@ -10,5 +10,11 @@
   padding-top: 20%;
 }
 .profile-img {
-  max-width: 32%;
+  max-width: 25%;
+  max-height: 5%;
+}
+
+.profile-img-google {
+  max-width: 50%;
+  max-height: 20%;
 }

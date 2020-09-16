@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 const formValid = (state) => {
   let valid = true;
@@ -12,7 +13,7 @@ const formValid = (state) => {
   return valid;
 };
 
-export default class SetPassword extends Component {
+class SetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,9 +50,17 @@ export default class SetPassword extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { password, confirmPassword } = this.state;
+    const { password } = this.state;
     if (formValid(this.state)) {
-      console.log(password + " and " + confirmPassword);
+      const email = this.props.match.params.email;
+      const users = this.props.users.map((user) => {
+        if (user.email === email) {
+          user.password = password;
+        }
+        return user;
+      });
+      localStorage.setItem("users", JSON.stringify(users));
+      this.props.history.push("/");
     } else {
       alert("failed");
     }
@@ -106,3 +115,11 @@ export default class SetPassword extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps)(SetPassword);

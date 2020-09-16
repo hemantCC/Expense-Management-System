@@ -28,7 +28,7 @@ class newUser extends Component {
           />
           <div className="display-4">Add Category</div>
 
-          {this.props.categories && (
+          {this.props.categories.length > 0 && (
             <>
               <table className="table table-striped mt-3">
                 <thead>

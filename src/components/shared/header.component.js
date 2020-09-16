@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import "./shared.component.css";
 
 class Header extends Component {
+  handleLogout = () => {
+    localStorage.removeItem("loggedUser");
+  };
+
   render() {
     return (
       <div>
@@ -22,7 +26,7 @@ class Header extends Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav mr-auto">
               <li className="nav-item mr-4">
                 <Link className="nav-link " to="/dashboard">
                   <b> Dashboard</b>
@@ -33,19 +37,13 @@ class Header extends Component {
                   <b> Expenses</b>
                 </Link>
               </li>
-              <li className="nav-item mr-4">
-                <Link className="nav-link" to="/newUser">
-                  <b> New User</b>
-                </Link>
-              </li>
-              <li className="nav-item mr-4">
-                <Link className="nav-link" to="/">
-                  <b> Login</b>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  <b> Register</b>
+            </ul>
+            <ul className="navbar-nav">
+              <li className="nav-item" onClick={this.handleLogout}>
+                <Link className="nav-link " to="/">
+                  <b>
+                    <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
+                  </b>
                 </Link>
               </li>
             </ul>

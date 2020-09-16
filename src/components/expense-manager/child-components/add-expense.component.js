@@ -43,7 +43,6 @@ class AddExpense extends Component {
   // }
 
   handleSubmit = (e) => {
-    e.preventDefault();
     if (this.props.currentExpenseIndex === -1) {
       console.log("add");
       this.props.insertExpense(this.state);
@@ -51,11 +50,7 @@ class AddExpense extends Component {
       console.log("edit");
       this.props.editExpense(this.state);
     }
-    // this.setState({
-    //   description: "",
-    //   amount: "",
-    //   image: "",
-    // });
+    e.preventDefault();
   };
 
   handleChange = (e) => {

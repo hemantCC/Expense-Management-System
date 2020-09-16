@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { insertUser } from "../../redux/actions/expense.action";
 import { connect } from "react-redux";
+import emailjs from "emailjs-com";
 
 const emailRegx = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 const phoneRegx = RegExp(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/);
@@ -78,7 +79,6 @@ class SignUp extends Component {
       formErrors,
       [name]: value,
     });
-    console.log(this.state);
   };
 
   handleSubmit = (event) => {
@@ -90,12 +90,31 @@ class SignUp extends Component {
       console.log(this.state);
     }
     if (validForm(this.state)) {
+      this.sendEmail(event);
       console.log("Registration Success");
       this.props.insertUser(this.state);
       this.props.history.push("/");
     } else {
       console.log("Registration Fail");
     }
+  };
+
+  sendEmail = (e) => {
+    emailjs
+      .sendForm(
+        "gmail",
+        "template_5y0aoft",
+        e.target,
+        "user_CXIh8B8oNAAI9jTPmKEhw"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   };
 
   render() {

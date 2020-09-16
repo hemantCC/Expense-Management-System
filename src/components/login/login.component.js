@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { GoogleLogin } from "react-google-login";
 import { Link } from "react-router-dom";
+import TextField from "@material-ui/core/TextField";
+import { connect } from "react-redux";
 
 const formValid = (state) => {
   let valid = true;
@@ -40,8 +42,25 @@ class Login extends Component {
         accessToken: response.accessToken,
       }));
     }
-    console.log(response);
-    // this.props.history.push("/dashboard");
+    localStorage.setItem(
+      "loggedUser",
+      JSON.stringify({
+        email: response.profileObj.email,
+        isGoogleUser: true,
+        image: response.profileObj.imageUrl,
+        name: response.profileObj.givenName,
+        familyName: response.profileObj.familyName,
+      })
+    );
+    this.props.history.push("/dashboard");
+  }
+
+  redirection() {
+    if (JSON.parse(localStorage.getItem("categories")).length === 0) {
+      this.props.history.push("/newUser");
+    } else {
+      this.props.history.push("/dashboard");
+    }
   }
 
   handleLoginFailure() {
@@ -74,7 +93,28 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (formValid(this.state)) {
-      console.log(this.state);
+      this.props.users.map((user) => {
+        if (
+          user.username === this.state.username &&
+          user.password === this.state.password
+        ) {
+          localStorage.setItem(
+            "loggedUser",
+            JSON.stringify({
+              username: user.username,
+              email: user.email,
+              isGoogleUser: false,
+              contact: user.contact,
+              dateOfBirth: user.dateOfBirth,
+              designation: user.designation,
+              address: user.address,
+            })
+          );
+          this.redirection();
+        } else {
+          console.log("username or password incorrect");
+        }
+      });
     } else {
       console.log("Form Invalid");
     }
@@ -85,16 +125,14 @@ class Login extends Component {
       <div className="row w-100">
         <div className="col-md-4 col-sm-2"></div>
         <div className="col-md-4 col-sm-8 formStyle">
-          <div className="text-center display-4">Login</div>
+          <div className="text-center display-4 mb-4">Login</div>
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                id="username"
-                className="form-control"
+              <TextField
+                className="form-control mb-3"
                 name="username"
                 type="text"
-                placeholder="Enter username"
+                label="Username"
                 onChange={this.handleChange}
               />
               {this.state.formErrors.username.length > 0 && (
@@ -104,13 +142,12 @@ class Login extends Component {
               )}
             </div>
             <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
+              <TextField
                 id="password"
-                className="form-control"
+                className="form-control mb-3"
                 name="password"
                 type="password"
-                placeholder="Enter Password"
+                label="Password"
                 onChange={this.handleChange}
               />
               {this.state.formErrors.password.length > 0 && (
@@ -143,4 +180,9 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users,
+  };
+};
+export default connect(mapStateToProps)(Login);
