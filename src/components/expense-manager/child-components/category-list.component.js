@@ -1,39 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Divider from "@material-ui/core/Divider";
 import AddCategory from "../../shared/add-category.component";
+import { connect } from "react-redux";
+import { updateCurrentCategoryIndex } from "../../../redux/actions/expense.action";
 
-function CategoryList() {
+function CategoryList({
+  categories,
+  updateCurrentCategoryIndex,
+  selectedCategoryIndex,
+}) {
   const [state, setState] = useState(false);
-  const [category, setCategory] = useState([{}]);
 
   function onToggle() {
     setState(!state);
   }
-
-  useEffect(() => {
-    var categories = JSON.parse(localStorage.getItem("categories"));
-    setCategory(categories);
-  }, [state]);
-
-  function onSubmit(value) {
-    delete value.setOpen;
-    if (JSON.parse(localStorage.getItem("categories")) == null) {
-      localStorage.setItem("categories", JSON.stringify([]));
-    }
-    var categories = JSON.parse(localStorage.getItem("categories"));
-    categories.push(value);
-    localStorage.setItem("categories", JSON.stringify(categories));
-    setCategory(categories);
-  }
-
   return (
     <div>
       <h3 className="text-center pt-3">Categories</h3>
       <Divider className="mx-3"></Divider>
       <div className="card c2">
-        <ul className="list-group list-group-flush text-center">
-          {category?.map((item, index) => {
-            return <li className="list-group-item">{item.name}</li>;
+        <ul className="list-group list-group-flush">
+          {categories?.map((item, index) => {
+            return (
+              <li
+                className="list-group-item px-5"
+                key={index}
+                onClick={() => updateCurrentCategoryIndex(index)}
+              >
+                <img
+                  src={item.image}
+                  className="img float-left rounded"
+                  alt="category-img"
+                />
+                <div className="float-right ">{item.name}</div>
+              </li>
+            );
           })}
         </ul>
       </div>
@@ -48,10 +49,23 @@ function CategoryList() {
         <div className="text-center">Add Category</div>
       </div>
 
-      {state && (
-        <AddCategory onToggle={onToggle} setOpen={state} onsubmit={onSubmit} />
-      )}
+      {state && <AddCategory onToggle={onToggle} />}
     </div>
   );
 }
-export default CategoryList;
+
+const mapStateToProps = (state) => {
+  return {
+    categories: Array.from(state.categories),
+    selectedCategory: state.selectedCategoryIndex,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCurrentCategoryIndex: (index) =>
+      dispatch(updateCurrentCategoryIndex(index)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

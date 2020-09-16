@@ -10,7 +10,7 @@ class ExpenseManager extends Component {
     return (
       <div>
         <Header />
-        <div className="row justify-content-between px-4 mt-2">
+        <div className="row justify-content-between px-4 mt-2 mx-0">
           <div className="col-md-3 my-2 py-0 ">
             <div className="expense-component">
               <CategoryList />

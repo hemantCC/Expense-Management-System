@@ -5,21 +5,23 @@ import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
+import { connect } from "react-redux";
+import { insertCategory } from "../../redux/actions/expense.action";
 
 class AddCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      setOpen: this.props.setOpen,
+      setOpen: true,
       name: "",
       amount: null,
       image: "",
       expenses: [
-        {
-          description: "",
-          amount: null,
-          image: "",
-        },
+        // {
+        //   description: "",
+        //   amount: null,
+        //   image: "",
+        // },
       ],
     };
   }
@@ -30,17 +32,9 @@ class AddCategory extends Component {
   };
 
   handleSubmit = () => {
-    this.props.onToggle(!this.state.setOpen);
     this.setState({ setOpen: !this.state.setOpen });
-    // if (JSON.parse(localStorage.getItem("categories")) === null)
-    //   currentCategories = localStorage.setItem(
-    //     "categories",
-    //     JSON.stringify([])
-    //   );
-    // var currentCategories = JSON.parse(localStorage.getItem("categories"));
-    // currentCategories.push(this.state);
-    // localStorage.setItem("categories", JSON.stringify(currentCategories));
-    this.props.onsubmit(this.state);
+    this.props.insertCategory(this.state);
+    this.props.onToggle(!this.state.setOpen);
   };
 
   handleChange = (e) => {
@@ -48,10 +42,6 @@ class AddCategory extends Component {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
-        // convert file to base64 String
-        // const base64String = reader.result
-        // .replace("data:", "")
-        // .replace(/^.+,/, "");
         this.setState({
           image: reader.result,
         });
@@ -115,4 +105,9 @@ class AddCategory extends Component {
   }
 }
 
-export default AddCategory;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    insertCategory: (value) => dispatch(insertCategory(value)),
+  };
+};
+export default connect(null, mapDispatchToProps)(AddCategory);

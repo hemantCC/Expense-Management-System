@@ -8,9 +8,13 @@
   overflow-x: hidden;
 }
 .c1 {
-  max-width: 65%;
+  width: 65%;
 }
 
 .c2 {
   max-width: 100%;
+}
+.img {
+  max-width: 80px;
+  height: 40px;
 }

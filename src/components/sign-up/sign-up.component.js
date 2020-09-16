@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { insertUser } from "../../redux/actions/expense.action";
+import { connect } from "react-redux";
 
 const emailRegx = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 const phoneRegx = RegExp(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/);
@@ -30,6 +32,7 @@ class SignUp extends Component {
       designation: "",
       dateOfBirth: "",
       address: "",
+      password: "",
       formErrors: {
         username: "",
         email: "",
@@ -87,9 +90,11 @@ class SignUp extends Component {
       console.log(this.state);
     }
     if (validForm(this.state)) {
-      console.log("Success");
+      console.log("Registration Success");
+      this.props.insertUser(this.state);
+      this.props.history.push("/");
     } else {
-      console.log("Invalid");
+      console.log("Registration Fail");
     }
   };
 
@@ -211,4 +216,10 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    insertUser: (value) => dispatch(insertUser(value)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SignUp);

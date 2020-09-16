@@ -1,50 +1,18 @@
 import React, { Component } from "react";
 import AddCategory from "./add-category.component";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class newUser extends Component {
   constructor() {
     super();
     this.state = {
       setOpen: false,
-      name: "",
-      amount: null,
-      image: "",
-      categories: [
-        {
-          expenses: [
-            {
-              description: "",
-              amount: null,
-              image: "",
-            },
-          ],
-        },
-      ],
     };
   }
 
-  componentDidMount = () => {
-    this.setState({
-      categories: JSON.parse(localStorage.getItem("categories")),
-    });
-  };
-
   toggleDialog = () => {
     this.setState({ setOpen: !this.state.setOpen });
-  };
-
-  onSubmit = (value) => {
-    delete value.setOpen;
-    if (JSON.parse(localStorage.getItem("categories")) == null) {
-      localStorage.setItem("categories", JSON.stringify([]));
-    }
-    var categories = JSON.parse(localStorage.getItem("categories"));
-    categories.push(value);
-    localStorage.setItem("categories", JSON.stringify(categories));
-    this.setState({
-      categories: categories,
-    });
   };
 
   render() {
@@ -60,7 +28,7 @@ class newUser extends Component {
           />
           <div className="display-4">Add Category</div>
 
-          {this.state.categories && (
+          {this.props.categories && (
             <>
               <table className="table table-striped mt-3">
                 <thead>
@@ -71,7 +39,7 @@ class newUser extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.categories.map((item, index) => {
+                  {this.props.categories?.map((item, index) => {
                     return (
                       <tr key={index}>
                         <td>
@@ -98,16 +66,16 @@ class newUser extends Component {
           </h6>
         </div>
         <div className="col-md-2 col-sm-2"></div>
-        {this.state.setOpen && (
-          <AddCategory
-            setOpen={this.state.setOpen}
-            onToggle={this.toggleDialog}
-            onsubmit={this.onSubmit}
-          />
-        )}
+        {this.state.setOpen && <AddCategory onToggle={this.toggleDialog} />}
       </div>
     );
   }
 }
 
-export default newUser;
+const mapStateToProps = (state) => {
+  return {
+    categories: Array.from(state.categories),
+  };
+};
+
+export default connect(mapStateToProps)(newUser);
