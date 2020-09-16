@@ -6,6 +6,7 @@ import {
   editExpense,
 } from "../../../redux/actions/expense.action";
 import { connect } from "react-redux";
+import { TextField } from "@material-ui/core";
 
 class AddExpense extends Component {
   constructor(props) {
@@ -15,6 +16,10 @@ class AddExpense extends Component {
       description: "",
       amount: "",
       image: "",
+      formErrors: {
+        description: "",
+        amount: "",
+      },
     };
   }
 
@@ -45,6 +50,7 @@ class AddExpense extends Component {
   handleSubmit = (e) => {
     if (this.props.currentExpenseIndex === -1) {
       console.log("add");
+      console.log(this.state.image);
       this.props.insertExpense(this.state);
     } else {
       console.log("edit");
@@ -54,8 +60,11 @@ class AddExpense extends Component {
   };
 
   handleChange = (e) => {
+    const { name, value } = e.target;
+    let formErrors = this.state.formErrors;
     if (e.target.name === "image") {
       const file = e.target.files[0];
+
       const reader = new FileReader();
       reader.onloadend = () => {
         this.setState({
@@ -64,9 +73,32 @@ class AddExpense extends Component {
       };
       reader.readAsDataURL(file);
     } else {
+      switch (name) {
+        case "description":
+          formErrors.description =
+            value.length < 5 ? "minimum 5 characters required" : "";
+          break;
+        case "amount":
+          formErrors.amount =
+            value.length < 1
+              ? "Amount required"
+              : /\D/.test(value)
+              ? "Only Numbers"
+              : "";
+          // formErrors.amount = /\D/.test(value) ? "Only Numbers" : "";
+          break;
+        default:
+          break;
+      }
+
       this.setState({
-        [e.target.name]: e.target.value,
+        formErrors,
+        [name]: value,
       });
+
+      // this.setState({
+      //   [e.target.name]: e.target.value,
+      // });
     }
   };
 
@@ -75,33 +107,50 @@ class AddExpense extends Component {
       <div>
         <h3 className="text-center pt-3">Add Expense</h3>
         <Divider className="mx-2"></Divider>
-        <form className="px-4">
+        <form className="px-4" onSubmit={this.handleSubmit}>
           <div className="form-group mt-4">
-            <textarea
-              className="form-control"
-              placeholder="Description"
+            <TextField
+              // className="form-control"
+              // placeholder="Description"
+              required
               rows="4"
               name="description"
+              label="Description"
+              multiline
+              rows={2}
+              rowsMax={4}
               value={this.state.description}
               onChange={this.handleChange}
-            ></textarea>
+            />
+            {this.state.formErrors.description.length > 0 && (
+              <span className="text-danger">
+                {this.state.formErrors.description}
+              </span>
+            )}
           </div>
           <div className="form-group mt-4">
-            <input
+            <TextField
               type="text"
-              placeholder="Amount"
-              className="form-control"
+              label="Amount"
+              required
+              // placeholder="Amount"
+              // className="form-control"
               name="amount"
               value={this.state.amount}
               onChange={this.handleChange}
             />
+            {this.state.formErrors.amount.length > 0 && (
+              <span className="text-danger">
+                {this.state.formErrors.amount}
+              </span>
+            )}
           </div>
           <div className="form-group mt-5">
             <input
               type="file"
               name="image"
               onChange={this.handleChange}
-              value={this.state.image}
+              // value={this.state.image}
             />
           </div>
           <div className="form-group text-center mt-5">
@@ -109,7 +158,14 @@ class AddExpense extends Component {
               variant="contained"
               type="submit"
               color="primary"
-              onClick={this.handleSubmit}
+              disabled={
+                !(
+                  this.state.formErrors.description === "" &&
+                  this.state.formErrors.amount === "" &&
+                  this.state.description !== "" &&
+                  this.state.amount !== ""
+                )
+              }
             >
               Add
             </Button>

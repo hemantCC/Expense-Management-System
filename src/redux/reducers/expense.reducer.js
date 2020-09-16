@@ -25,7 +25,11 @@ export const expenseReducer = (state, action) => {
       };
     case UPDATE_CURRENTCATEGORY_INDEX:
       localStorage.setItem("currentCategory", action.payload);
-      return { categories: categories, selectedCategoryIndex: action.payload };
+      return {
+        categories: categories,
+        selectedCategoryIndex: action.payload,
+        selectedExpenseIndex: -1,
+      };
     case UPDATE_CURRENTEXPENSE_INDEX:
       localStorage.setItem("currentExpense", JSON.stringify(action.payload));
       return {

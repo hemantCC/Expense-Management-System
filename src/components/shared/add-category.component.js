@@ -16,13 +16,11 @@ class AddCategory extends Component {
       name: "",
       amount: null,
       image: "",
-      expenses: [
-        // {
-        //   description: "",
-        //   amount: null,
-        //   image: "",
-        // },
-      ],
+      expenses: [],
+      formErrors: {
+        name: "",
+        amount: "",
+      },
     };
   }
 
@@ -38,6 +36,8 @@ class AddCategory extends Component {
   };
 
   handleChange = (e) => {
+    const { name, value } = e.target;
+    let formErrors = this.state.formErrors;
     if (e.target.name === "image") {
       const file = e.target.files[0];
       const reader = new FileReader();
@@ -48,8 +48,26 @@ class AddCategory extends Component {
       };
       reader.readAsDataURL(file);
     } else {
+      switch (name) {
+        case "name":
+          formErrors.name =
+            value.length < 3 ? "minimum 3 characters required" : "";
+          break;
+        case "amount":
+          formErrors.amount =
+            value.length < 1
+              ? "Amount required"
+              : /\D/.test(value)
+              ? "Only Numbers"
+              : "";
+          break;
+        default:
+          break;
+      }
+
       this.setState({
-        [e.target.name]: e.target.value,
+        formErrors,
+        [name]: value,
       });
     }
   };
@@ -71,9 +89,13 @@ class AddCategory extends Component {
               label="Category Name"
               type="text"
               fullWidth
+              required
               name="name"
               onChange={this.handleChange}
             />
+            {this.state.formErrors.name.length > 0 && (
+              <span className="text-danger">{this.state.formErrors.name}</span>
+            )}
             <TextField
               margin="dense"
               id="amount"
@@ -81,8 +103,15 @@ class AddCategory extends Component {
               type="text"
               name="amount"
               fullWidth
+              required
               onChange={this.handleChange}
             />
+            {this.state.formErrors.amount.length > 0 && (
+              <span className="text-danger">
+                {this.state.formErrors.amount}
+              </span>
+            )}
+
             <input
               type="file"
               name="image"
@@ -95,7 +124,18 @@ class AddCategory extends Component {
               Cancel
             </Button>
 
-            <Button onClick={this.handleSubmit} color="primary">
+            <Button
+              onClick={this.handleSubmit}
+              color="primary"
+              disabled={
+                !(
+                  this.state.formErrors.name === "" &&
+                  this.state.formErrors.amount === "" &&
+                  this.state.name !== "" &&
+                  this.state.amount !== ""
+                )
+              }
+            >
               Add
             </Button>
           </DialogActions>

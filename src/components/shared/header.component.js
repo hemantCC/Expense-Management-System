@@ -12,7 +12,10 @@ class Header extends Component {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light ">
           <Link className="navbar-brand" to="/dashboard">
-            <b> Expense Manager</b>
+            <img
+              src={require("../../assets/application-images/logo.png")}
+              style={{ height: 50 }}
+            />
           </Link>
           <button
             className="navbar-toggler"
