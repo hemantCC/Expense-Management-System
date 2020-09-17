@@ -7,13 +7,14 @@ import { updateCurrentCategoryIndex } from "../../../redux/actions/expense.actio
 function CategoryList({
   categories,
   updateCurrentCategoryIndex,
-  selectedCategoryIndex,
+  selectedCategory,
 }) {
   const [state, setState] = useState(false);
 
   function onToggle() {
     setState(!state);
   }
+
   return (
     <div>
       <h3 className="text-center pt-3">Categories</h3>
@@ -23,15 +24,37 @@ function CategoryList({
           {categories?.map((item, index) => {
             return (
               <li
-                className="list-group-item px-5"
+                className={`list-group-item px-5
+                  ${
+                    selectedCategory === index && !item.isDisabled
+                      ? "bg-info"
+                      : ""
+                  } ${item.isDisabled ? "bg-secondary" : ""}`}
+                style={{
+                  pointerEvents:
+                    window.location.pathname === "/expenseManager" &&
+                    item.isDisabled
+                      ? "none"
+                      : "auto",
+                }}
                 key={index}
                 onClick={() => updateCurrentCategoryIndex(index)}
               >
-                <img
-                  src={item.image}
-                  className="img float-left rounded"
-                  alt="category-img"
-                />
+                {item.image === "" && (
+                  <img
+                    src={require("../../../assets/application-images/no-image.png")}
+                    className="img float-left rounded"
+                    alt="no-img"
+                  />
+                )}
+                {item.image !== "" && (
+                  <img
+                    src={item.image}
+                    className="img float-left rounded"
+                    alt="category-img"
+                  />
+                )}
+                {/* <span className="ml-5">{item.isDisabled && "Disabled"}</span> */}
                 <div className="float-right ">{item.name}</div>
               </li>
             );
@@ -58,6 +81,7 @@ const mapStateToProps = (state) => {
   return {
     categories: Array.from(state.categories),
     selectedCategory: state.selectedCategoryIndex,
+    // selectedCategoryStatus: state.categories[state.selectedCategoryIndex].,
   };
 };
 

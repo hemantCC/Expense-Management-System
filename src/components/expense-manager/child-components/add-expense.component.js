@@ -48,15 +48,22 @@ class AddExpense extends Component {
   // }
 
   handleSubmit = (e) => {
+    e.preventDefault();
     if (this.props.currentExpenseIndex === -1) {
-      console.log("add");
       console.log(this.state.image);
       this.props.insertExpense(this.state);
     } else {
-      console.log("edit");
       this.props.editExpense(this.state);
     }
-    e.preventDefault();
+    this.setState({
+      description: "",
+      amount: "",
+      image: "",
+      formErrors: {
+        description: "",
+        amount: "",
+      },
+    });
   };
 
   handleChange = (e) => {
@@ -113,7 +120,6 @@ class AddExpense extends Component {
               // className="form-control"
               // placeholder="Description"
               required
-              rows="4"
               name="description"
               label="Description"
               multiline

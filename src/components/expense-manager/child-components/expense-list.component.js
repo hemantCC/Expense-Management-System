@@ -24,8 +24,10 @@ class ExpenseList extends Component {
         </h3>
         <Divider className="mx-3"></Divider>
         <div className="row">
-          <div className="col-6 text-center">Total Amount : 5000</div>
-          <div className="col-6 text-center">Remaining Amount : 2000</div>
+          <div className="col-6 text-center">
+            Total Amount :&euro; {this.props.currentCategoryAmount}
+          </div>
+          <div className="col-6 text-center">Remaining Amount :&euro; </div>
         </div>
         <Divider className="mx-3"></Divider>
         {this.props.expenses &&
@@ -37,23 +39,24 @@ class ExpenseList extends Component {
                     Amount Spent : &euro; <span>{item.amount}</span>
                     <i
                       className="fa fa-trash float-right"
+                      style={{ color: "black" }}
                       onClick={() => this.handleDelete(index)}
                     ></i>
-                    <i
-                      className="fa fa-pencil mr-3 float-right"
+                    {/* <i
+                      className="fa fa-pencil btn-outline-dark mr-3 float-right"
                       onClick={() => this.handleEdit(index)}
-                    ></i>
+                    ></i> */}
                   </div>
                   <div className="card-body row">
-                    {/* <h5 className="card-title"></h5> */}
                     <div className="col-md-6 col-xs-6">
                       {item.image !== "" && (
-                        <img src={item.image} className="w-100" />
+                        <img src={item.image} className="w-100" alt="e-i" />
                       )}
                       {item.image === "" && (
                         <img
                           src={require("../../../assets/application-images/no-image.png")}
                           className="w-100"
+                          alt="no-i"
                         />
                       )}
                     </div>
@@ -76,6 +79,8 @@ const mapStateToProps = (state) => {
     expenses: state.categories[state.selectedCategoryIndex]?.expenses,
     currentCategoryName:
       " ( " + state.categories[state.selectedCategoryIndex]?.name + " )",
+    currentCategoryAmount:
+      state.categories[state.selectedCategoryIndex]?.amount,
   };
 };
 const mapDispatchToProps = (dispatch) => {

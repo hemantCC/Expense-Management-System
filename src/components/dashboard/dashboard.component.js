@@ -20,22 +20,22 @@ class Dashboard extends Component {
 
   componentDidMount = () => {
     const user = JSON.parse(localStorage.getItem("loggedUser"));
-    if (user.isGoogleUser) {
+    if (user?.isGoogleUser) {
       this.setState({
         isGoogleUser: true,
-        email: user.email,
-        image: user.image,
-        name: user.name,
+        email: user?.email,
+        image: user?.image,
+        name: user?.name,
       });
     } else {
       this.setState({
         isGoogleUser: false,
-        email: user.email,
-        username: user.username,
-        contact: user.contact,
-        dateOfBirth: user.dateOfBirth,
-        designation: user.designation,
-        address: user.address,
+        email: user?.email,
+        username: user?.username,
+        contact: user?.contact,
+        dateOfBirth: user?.dateOfBirth,
+        designation: user?.designation,
+        address: user?.address,
       });
     }
   };

@@ -5,6 +5,8 @@ export const UPDATE_CURRENTEXPENSE_INDEX = "UPDATE_CURRENTEXPENSE_INDEX";
 export const DELETE_EXPENSE = "DELETE_EXPENSE";
 export const EDIT_EXPENSE = "EDIT_EXPENSE";
 export const INSERT_USER = "INSERT_USER";
+export const UPDATE_MAXAMOUNT = "UPDATE_MAXAMOUNT";
+export const DISABLE_CATEGORY = "DISABLE_CATEGORY";
 
 export const insertCategory = (data) => {
   return {
@@ -50,6 +52,20 @@ export const editExpense = (data) => {
 export const insertUser = (data) => {
   return {
     type: INSERT_USER,
+    payload: data,
+  };
+};
+
+export const updateMaxAmount = (data) => {
+  return {
+    type: UPDATE_MAXAMOUNT,
+    payload: data,
+  };
+};
+
+export const disableCategory = (data) => {
+  return {
+    type: DISABLE_CATEGORY,
     payload: data,
   };
 };

@@ -17,6 +17,7 @@ class AddCategory extends Component {
       amount: null,
       image: "",
       expenses: [],
+      isDisabled: false,
       formErrors: {
         name: "",
         amount: "",

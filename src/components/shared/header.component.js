@@ -15,6 +15,7 @@ class Header extends Component {
             <img
               src={require("../../assets/application-images/logo.png")}
               style={{ height: 50 }}
+              alt="logo"
             />
           </Link>
           <button
@@ -42,6 +43,13 @@ class Header extends Component {
               </li>
             </ul>
             <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link className="nav-link " to="/settings">
+                  <b>
+                    <i className="fa fa-cog" aria-hidden="true"></i> Settings
+                  </b>
+                </Link>
+              </li>
               <li className="nav-item" onClick={this.handleLogout}>
                 <Link className="nav-link " to="/">
                   <b>

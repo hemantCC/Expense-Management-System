@@ -10,7 +10,6 @@ const formValid = (state) => {
     ? (valid = false)
     : (valid = true);
   Object.values(state.formErrors).forEach((val) => {
-    //if error length > 0 set valid = false
     val.length > 0 && (valid = false);
   });
   return valid;
@@ -156,7 +155,18 @@ class Login extends Component {
                 </span>
               )}
             </div>
-            <button className="btn btn-primary btn-block" type="submit">
+            <button
+              className="btn btn-primary btn-block"
+              type="submit"
+              disabled={
+                !(
+                  this.state.formErrors.username === "" &&
+                  this.state.formErrors.password === "" &&
+                  this.state.username !== "" &&
+                  this.state.password !== ""
+                )
+              }
+            >
               Login
             </button>
 
