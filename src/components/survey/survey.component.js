@@ -47,8 +47,8 @@ class SurveyComponent extends Component {
     for (var i = 0; i < question.length; i++) {
       doc.text(20, 20 * (i + 2), "Question" + (i + 1) + " :" + question[i]);
     }
-    for (var i = 1; i <= question.length; i++) {
-      doc.text(20, 20 * (i + 8), "Answer" + i + " : " + answers[i]?.toString());
+    for (var j = 1; j <= question.length; j++) {
+      doc.text(20, 20 * (j + 8), "Answer" + j + " : " + answers[j]?.toString());
     }
     doc.save("MySurvey.pdf");
   };

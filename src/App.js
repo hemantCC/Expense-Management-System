@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./components/login/login.component";
 import SignUp from "./components/sign-up/sign-up.component";
 import Dashboard from "./components/dashboard/dashboard.component";
@@ -9,7 +9,6 @@ import SetPassword from "./components/shared/set-password.component";
 import newUser from "./components/shared/new-user.component";
 import ExpenseManager from "./components/expense-manager/expense-manager.component";
 import SettingComponent from "./components/shared/setting.component";
-import isAuthorized from "./auth/auth";
 import SurveyComponent from "./components/survey/survey.component";
 
 function App() {
