@@ -91,8 +91,10 @@ class AddExpense extends Component {
               ? "Amount required"
               : /\D/.test(value)
               ? "Only Numbers"
+              : Number(value) >
+                Number(this.props.currentCategoryRemainingAmount)
+              ? "Amount Exceeding limit"
               : "";
-          // formErrors.amount = /\D/.test(value) ? "Only Numbers" : "";
           break;
         default:
           break;
@@ -102,10 +104,6 @@ class AddExpense extends Component {
         formErrors,
         [name]: value,
       });
-
-      // this.setState({
-      //   [e.target.name]: e.target.value,
-      // });
     }
   };
 
@@ -117,8 +115,6 @@ class AddExpense extends Component {
         <form className="px-4" onSubmit={this.handleSubmit}>
           <div className="form-group mt-4">
             <TextField
-              // className="form-control"
-              // placeholder="Description"
               required
               name="description"
               label="Description"
@@ -188,6 +184,8 @@ const mapStateToProps = (state) => {
         state.selectedExpenseIndex
       ],
     currentExpenseIndex: state.selectedExpenseIndex,
+    currentCategoryRemainingAmount:
+      state.categories[state.selectedCategoryIndex]?.remainingAmount,
   };
 };
 const mapDispatchToProps = (dispatch) => {

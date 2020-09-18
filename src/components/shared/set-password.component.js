@@ -1,3 +1,4 @@
+import { TextField } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
@@ -73,39 +74,29 @@ class SetPassword extends Component {
         <div className="col-md-4 col-sm-8 formStyle">
           <div className="text-center display-4 mb-4">Set Password</div>
           <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="password">New Password</label>
-              <input
-                id="password"
+            <div className="form-group mt-5">
+              <TextField
+                error={this.state.formErrors.password.length > 0}
+                helperText={this.state.formErrors.password}
                 className="form-control"
                 name="password"
                 type="password"
-                placeholder="Enter New Password"
+                label="password"
                 onChange={this.handleChange}
               />
-              {this.state.formErrors.password.length > 0 && (
-                <span className="text-danger">
-                  {this.state.formErrors.password}
-                </span>
-              )}
             </div>
-            <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                id="confirmPassword"
+            <div className="form-group mt-5">
+              <TextField
+                error={this.state.formErrors.confirmPassword.length > 0}
+                helperText={this.state.formErrors.confirmPassword}
                 className="form-control"
                 name="confirmPassword"
                 type="password"
-                placeholder="Repeat Password"
+                label="Confirm Password"
                 onChange={this.handleChange}
               />
-              {this.state.formErrors.confirmPassword.length > 0 && (
-                <span className="text-danger">
-                  {this.state.formErrors.confirmPassword}
-                </span>
-              )}
             </div>
-            <button className="btn btn-primary btn-block" type="submit">
+            <button className="btn btn-primary btn-block mt-5" type="submit">
               Confirm
             </button>
           </form>

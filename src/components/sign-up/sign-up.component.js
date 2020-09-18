@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { insertUser } from "../../redux/actions/expense.action";
 import { connect } from "react-redux";
 import emailjs from "emailjs-com";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/AlertTitle";
+import { TextField } from "@material-ui/core";
 
 const emailRegx = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 const phoneRegx = RegExp(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/);
@@ -42,6 +46,8 @@ class SignUp extends Component {
         dateOfBirth: "",
         address: "",
       },
+      showError: false,
+      showSuccess: false,
     };
   }
 
@@ -91,11 +97,31 @@ class SignUp extends Component {
     }
     if (validForm(this.state)) {
       this.sendEmail(event);
-      console.log("Registration Success");
       this.props.insertUser(this.state);
-      this.props.history.push("/");
+      this.setState({
+        showSuccess: true,
+      });
+      this.setState({
+        username: "",
+        email: "",
+        contact: "",
+        designation: "",
+        dateOfBirth: "",
+        address: "",
+        password: "",
+        formErrors: {
+          username: "",
+          email: "",
+          contact: "",
+          designation: "",
+          dateOfBirth: "",
+          address: "",
+        },
+      });
     } else {
-      console.log("Registration Fail");
+      this.setState({
+        showError: true,
+      });
     }
   };
 
@@ -119,117 +145,131 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="row mx-0">
         <div className="col-md-2"></div>
         <div className="col-md-8 formStyle">
           <div className="text-center display-4">Sign Up</div>
           <form onSubmit={this.handleSubmit}>
-            <div className="row">
+            <div className="row mt-4">
               <div className="form-group col-md-6">
-                <label htmlFor="username">Username</label>
-                <input
-                  id="username"
+                <TextField
+                  error={this.state.formErrors.username.length > 0}
+                  helperText={this.state.formErrors.username}
                   className="form-control"
                   name="username"
                   type="text"
-                  placeholder="Enter username"
+                  label="username"
+                  value={this.state.username}
                   onChange={this.handleChange}
                 />
-                {this.state.formErrors.username.length > 0 && (
-                  <span className="text-danger">
-                    {this.state.formErrors.username}
-                  </span>
-                )}
               </div>
               <div className="form-group col-md-6">
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
+                <TextField
+                  error={this.state.formErrors.email.length > 0}
+                  helperText={this.state.formErrors.email}
                   className="form-control"
                   name="email"
                   type="text"
-                  placeholder="Enter Email"
+                  label="Email"
+                  value={this.state.email}
                   onChange={this.handleChange}
                 />
-                {this.state.formErrors.email.length > 0 && (
-                  <span className="text-danger">
-                    {this.state.formErrors.email}
-                  </span>
-                )}
               </div>
             </div>
-            <div className="row">
+            <div className="row mt-4">
               <div className="form-group col-md-6">
-                <label htmlFor="Contact">Contact</label>
-                <input
-                  id="Contact"
+                <TextField
+                  error={this.state.formErrors.contact.length > 0}
+                  helperText={this.state.formErrors.contact}
                   className="form-control"
                   name="contact"
                   type="text"
-                  placeholder="Enter Contact"
+                  label="contact"
+                  value={this.state.contact}
                   onChange={this.handleChange}
                 />
-                {this.state.formErrors.contact.length > 0 && (
-                  <span className="text-danger">
-                    {this.state.formErrors.contact}
-                  </span>
-                )}
               </div>
               <div className="form-group col-md-6">
-                <label htmlFor="Designation">Designation</label>
-                <input
-                  id="Designation"
+                <TextField
+                  error={this.state.formErrors.designation.length > 0}
+                  helperText={this.state.formErrors.designation}
                   className="form-control"
                   name="designation"
                   type="text"
-                  placeholder="Enter Designation"
+                  label="Designation"
+                  value={this.state.designation}
                   onChange={this.handleChange}
                 />
-                {this.state.formErrors.designation.length > 0 && (
-                  <span className="text-danger">
-                    {this.state.formErrors.designation}
-                  </span>
-                )}
               </div>
             </div>
-            <div className="row">
+            <div className="row mt-4">
               <div className="form-group col-md-6">
-                <label htmlFor="dob">Date of Birth</label>
-                <input
-                  id="dob"
+                <TextField
+                  error={this.state.formErrors.dateOfBirth.length > 0}
+                  helperText={this.state.formErrors.dateOfBirth}
                   className="form-control"
                   name="dateOfBirth"
                   type="date"
-                  placeholder="Enter Date of Birth"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  label="Date Of Birth"
+                  value={this.state.dateOfBirth}
                   onChange={this.handleChange}
                 />
-                {this.state.formErrors.dateOfBirth.length > 0 && (
-                  <span className="text-danger">
-                    Date of birth is Required.
-                  </span>
-                )}
               </div>
               <div className="form-group col-md-6">
-                <label htmlFor="Address">Address</label>
-                <textarea
-                  id="Address"
+                <TextField
+                  error={this.state.formErrors.address.length > 0}
+                  helperText={this.state.formErrors.address}
+                  multiline
+                  rows={2}
+                  rowsMax={4}
                   className="form-control"
                   name="address"
                   type="text"
                   placeholder="Enter Address"
+                  value={this.state.address}
                   onChange={this.handleChange}
-                ></textarea>
-                {this.state.formErrors.address.length > 0 && (
-                  <span className="text-danger">
-                    {this.state.formErrors.address}
-                  </span>
-                )}
+                ></TextField>
               </div>
             </div>
-            <button className="btn btn-primary btn-block">Sign Up</button>
+            <button className="btn btn-primary btn-block mt-3">Sign Up</button>
           </form>
         </div>
         <div className="col-md-2"></div>
+
+        <Snackbar
+          open={this.state.showSuccess}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          autoHideDuration={8000}
+          onClose={() => this.setState({ showSuccess: false })}
+        >
+          <Alert
+            className="bg-success"
+            severity="success"
+            style={{ color: "white" }}
+          >
+            <AlertTitle>Success</AlertTitle>
+            Registration Successfull —{" "}
+            <strong>Email has been sent to SET Password</strong>
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={this.state.showError}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          autoHideDuration={8000}
+          onClose={() => this.setState({ showError: false })}
+        >
+          <Alert
+            className="bg-danger"
+            severity="error"
+            style={{ color: "white" }}
+          >
+            <AlertTitle>Registration Fail</AlertTitle>
+            Please enter valid values!
+          </Alert>
+        </Snackbar>
       </div>
     );
   }

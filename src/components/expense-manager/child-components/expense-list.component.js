@@ -20,16 +20,23 @@ class ExpenseList extends Component {
     return (
       <div>
         <h3 className="text-center pt-3">
-          Expense List {this.props.currentCategoryName}
+          Expense List{" "}
+          {this.props.currentCategoryName !== " ( undefined )" &&
+            this.props.currentCategoryName}
         </h3>
         <Divider className="mx-3"></Divider>
         <div className="row">
           <div className="col-6 text-center">
             Total Amount :&euro; {this.props.currentCategoryAmount}
           </div>
-          <div className="col-6 text-center">Remaining Amount :&euro; </div>
+          <div className="col-6 text-center">
+            Remaining Amount :&euro; {this.props.currentCategoryRemainingAmount}
+          </div>
         </div>
         <Divider className="mx-3"></Divider>
+        {this.props.expenses === undefined && (
+          <div className="display-4 mt-5">Please Select a Category</div>
+        )}
         {this.props.expenses &&
           this.props.expenses.map((item, index) => {
             return (
@@ -81,6 +88,8 @@ const mapStateToProps = (state) => {
       " ( " + state.categories[state.selectedCategoryIndex]?.name + " )",
     currentCategoryAmount:
       state.categories[state.selectedCategoryIndex]?.amount,
+    currentCategoryRemainingAmount:
+      state.categories[state.selectedCategoryIndex]?.remainingAmount,
   };
 };
 const mapDispatchToProps = (dispatch) => {

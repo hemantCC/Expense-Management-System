@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "question": "How much do you spend money in a month?",
+    "questionType": "amount",
+    "required": true
+  },
+  {
+    "id": 2,
+    "question": "Do you prefer to Start Saving for Retirement now ?",
+    "questionType": "boolean",
+    "required": true
+  },
+  {
+    "id": 3,
+    "question": "How Much Emergency Money Is Needed for you?",
+    "questionType": "mcq",
+    "required": true,
+    "option1": 1000,
+    "option2": 2000,
+    "option3": 3000,
+    "option4": 5000
+  },
+  {
+    "id": 4,
+    "question": "Apart from yourself, For whom do you save money for?",
+    "questionType": "text",
+    "required": false
+  },
+  {
+    "id": 5,
+    "question": "Why do you think money should be managed ?",
+    "questionType": "textarea",
+    "required": false
+  }
+]

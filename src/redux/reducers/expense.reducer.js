@@ -16,10 +16,15 @@ export const expenseReducer = (state, action) => {
     case INSERT_CATEGORY:
       delete action.payload.formErrors;
       delete action.payload.setOpen;
+      action.payload.remainingAmount = action.payload.amount;
       categories.push(action.payload);
       localStorage.setItem("categories", JSON.stringify(categories));
       return { categories: categories };
     case INSERT_EXPENSE:
+      const prevRemaining =
+        categories[state.selectedCategoryIndex].remainingAmount;
+      categories[state.selectedCategoryIndex].remainingAmount =
+        prevRemaining - action.payload.amount;
       categories[state.selectedCategoryIndex].expenses.push(action.payload);
       localStorage.setItem("categories", JSON.stringify(categories));
       return {
@@ -42,6 +47,11 @@ export const expenseReducer = (state, action) => {
         selectedCategoryIndex: state.selectedCategoryIndex,
       };
     case DELETE_EXPENSE:
+      const amount =
+        categories[state.selectedCategoryIndex].expenses[action.payload].amount;
+      categories[state.selectedCategoryIndex].remainingAmount =
+        Number(categories[state.selectedCategoryIndex].remainingAmount) +
+        Number(amount);
       categories[state.selectedCategoryIndex].expenses.splice(
         action.payload,
         1
@@ -66,6 +76,8 @@ export const expenseReducer = (state, action) => {
     case INSERT_USER:
       const users = JSON.parse(localStorage.getItem("users"));
       delete action.payload.formErrors;
+      delete action.payload.showError;
+      delete action.payload.showSuccess;
       users.push(action.payload);
       localStorage.setItem("users", JSON.stringify(users));
       return {
@@ -83,7 +95,8 @@ export const expenseReducer = (state, action) => {
       localStorage.setItem("categories", JSON.stringify(categories));
       return {
         categories: categories,
-        selectedCategoryIndex: state.selectedCategoryIndex,
+        selectedCategoryIndex:
+          action.payload === false ? state.selectedCategoryIndex : -1,
       };
     default:
       return state;

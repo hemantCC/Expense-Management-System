@@ -128,32 +128,25 @@ class Login extends Component {
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <TextField
+                error={this.state.formErrors.username.length > 0}
+                helperText={this.state.formErrors.username}
                 className="form-control mb-3"
                 name="username"
                 type="text"
                 label="Username"
                 onChange={this.handleChange}
               />
-              {this.state.formErrors.username.length > 0 && (
-                <span className="text-danger">
-                  {this.state.formErrors.username}
-                </span>
-              )}
             </div>
             <div className="form-group">
               <TextField
-                id="password"
+                error={this.state.formErrors.password.length > 0}
+                helperText={this.state.formErrors.password}
                 className="form-control mb-3"
                 name="password"
                 type="password"
                 label="Password"
                 onChange={this.handleChange}
               />
-              {this.state.formErrors.password.length > 0 && (
-                <span className="text-danger">
-                  {this.state.formErrors.password}
-                </span>
-              )}
             </div>
             <button
               className="btn btn-primary btn-block"
