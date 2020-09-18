@@ -63,6 +63,14 @@ export const expenseReducer = (state, action) => {
         selectedExpenseIndex: -1,
       };
     case EDIT_EXPENSE:
+      const amt =
+        categories[state.selectedCategoryIndex].expenses[
+          state.selectedExpenseIndex
+        ].amount;
+      categories[state.selectedCategoryIndex].remainingAmount =
+        Number(state.categories[state.selectedCategoryIndex].remainingAmount) +
+        Number(amt) -
+        Number(action.payload.amount);
       categories[state.selectedCategoryIndex].expenses[
         state.selectedExpenseIndex
       ] = action.payload;
@@ -84,7 +92,12 @@ export const expenseReducer = (state, action) => {
         users: users,
       };
     case UPDATE_MAXAMOUNT:
+      const prevSpent =
+        Number(categories[state.selectedCategoryIndex].amount) -
+        Number(categories[state.selectedCategoryIndex].remainingAmount);
       categories[state.selectedCategoryIndex].amount = action.payload;
+      categories[state.selectedCategoryIndex].remainingAmount =
+        Number(action.payload) - Number(prevSpent);
       localStorage.setItem("categories", JSON.stringify(categories));
       return {
         categories: categories,

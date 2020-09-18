@@ -13,39 +13,63 @@ class AddExpense extends Component {
     super(props);
 
     this.state = {
-      description: "",
-      amount: "",
-      image: "",
+      ...this.returnStateProperties(),
       formErrors: {
         description: "",
         amount: "",
       },
+      updateMode: false,
     };
   }
 
-  // componentDidUpdate = (previousProps, previousState) => {
-  //   if (
-  //     JSON.stringify(this.props.currentExpense) !==
-  //     JSON.stringify(previousState)
-  //   ) {
-  //     console.log("update state");
-  //     this.setState({
-  //       ...this.props.currentExpense,
-  //     });
-  //   }
-  // };
+  componentDidUpdate = (previousProps, previousState) => {
+    // if (
+    //   JSON.stringify(this.props.currentExpense) !==
+    //   JSON.stringify(previousState)
+    // ) {
+    //   console.log("update state");
+    //   this.setState({
+    //     ...this.props.currentExpense,
+    //   });
+    // }
 
-  // returnStateProperties() {
-  //   if (this.props.currentExpenseIndex === -1) {
-  //     return {
-  //       description: "",
-  //       amount: "",
-  //       image: "",
-  //     };
-  //   } else {
-  //     return this.props.currentExpense;
-  //   }
-  // }
+    // console.log(
+    //   this.props.currentExpenseIndex !== -1 && this.state.updateMode === false
+    // );
+    // if (
+    //   this.props.currentExpenseIndex !== -1 &&
+    //   this.state.updateMode === false
+    // )
+    //   this.setState({ updateMode: true });
+    if (
+      this.props.currentExpenseIndex !== -1 &&
+      this.state.updateMode === false
+    ) {
+      console.log("update state");
+      this.setState({
+        ...this.props.currentExpense,
+        updateMode: true,
+      });
+    }
+
+    // console.log(this.state);
+    // console.log(this.currentExpenseIndex);
+    // if (this.props.currentExpenseIndex !== -1) {
+    //   window.location.reload();
+    // }
+  };
+
+  returnStateProperties() {
+    if (this.props.currentExpenseIndex === -1) {
+      return {
+        description: "",
+        amount: "",
+        image: "",
+      };
+    } else {
+      return this.props.currentExpense;
+    }
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -63,6 +87,7 @@ class AddExpense extends Component {
         description: "",
         amount: "",
       },
+      updateMode: false,
     });
   };
 
@@ -80,6 +105,9 @@ class AddExpense extends Component {
       };
       reader.readAsDataURL(file);
     } else {
+      const remAmount =
+        Number(this.props.currentCategoryRemainingAmount) -
+        Number(this.props.currentExpense?.amount);
       switch (name) {
         case "description":
           formErrors.description =
@@ -91,10 +119,13 @@ class AddExpense extends Component {
               ? "Amount required"
               : /\D/.test(value)
               ? "Only Numbers"
+              : Number(value) > remAmount
+              ? "Amount Exceeded "
               : Number(value) >
                 Number(this.props.currentCategoryRemainingAmount)
-              ? "Amount Exceeding limit"
+              ? "Amount limit Exceeded"
               : "";
+
           break;
         default:
           break;
@@ -118,41 +149,33 @@ class AddExpense extends Component {
               required
               name="description"
               label="Description"
+              error={this.state.formErrors.description.length > 0}
+              helperText={this.state.formErrors.description}
               multiline
               rows={2}
               rowsMax={4}
               value={this.state.description}
               onChange={this.handleChange}
             />
-            {this.state.formErrors.description.length > 0 && (
-              <span className="text-danger">
-                {this.state.formErrors.description}
-              </span>
-            )}
           </div>
           <div className="form-group mt-4">
             <TextField
               type="text"
               label="Amount"
               required
-              // placeholder="Amount"
-              // className="form-control"
+              error={this.state.formErrors.amount.length > 0}
+              helperText={this.state.formErrors.amount}
               name="amount"
               value={this.state.amount}
               onChange={this.handleChange}
             />
-            {this.state.formErrors.amount.length > 0 && (
-              <span className="text-danger">
-                {this.state.formErrors.amount}
-              </span>
-            )}
           </div>
           <div className="form-group mt-5">
             <input
               type="file"
               name="image"
               onChange={this.handleChange}
-              // value={this.state.image}
+              value={this.state.image}
             />
           </div>
           <div className="form-group text-center mt-5">

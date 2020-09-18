@@ -49,10 +49,11 @@ class ExpenseList extends Component {
                       style={{ color: "black" }}
                       onClick={() => this.handleDelete(index)}
                     ></i>
-                    {/* <i
-                      className="fa fa-pencil btn-outline-dark mr-3 float-right"
+                    <i
+                      className="fa fa-pencil mr-3 float-right"
+                      style={{ color: "black" }}
                       onClick={() => this.handleEdit(index)}
-                    ></i> */}
+                    ></i>
                   </div>
                   <div className="card-body row">
                     <div className="col-md-6 col-xs-6">
