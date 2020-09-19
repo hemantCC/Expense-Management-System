@@ -155,19 +155,19 @@ class SignUp extends Component {
           <div className="text-center display-4">Sign Up</div>
           <form onSubmit={this.handleSubmit}>
             <div className="row ">
-              <div className="form-group col-md-6 mt-2">
+              <div className="form-group col-md-6 mt-4">
                 <TextField
                   error={this.state.formErrors.username.length > 0}
                   helperText={this.state.formErrors.username}
                   className="form-control"
                   name="username"
                   type="text"
-                  label="username"
+                  label="Username"
                   value={this.state.username}
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-group col-md-6  mt-2">
+              <div className="form-group col-md-6  mt-4">
                 <TextField
                   error={this.state.formErrors.email.length > 0}
                   helperText={this.state.formErrors.email}
@@ -181,19 +181,19 @@ class SignUp extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="form-group col-md-6  mt-2">
+              <div className="form-group col-md-6  mt-4">
                 <TextField
                   error={this.state.formErrors.contact.length > 0}
                   helperText={this.state.formErrors.contact}
                   className="form-control"
                   name="contact"
                   type="text"
-                  label="contact"
+                  label="Contact"
                   value={this.state.contact}
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-group col-md-6  mt-2">
+              <div className="form-group col-md-6  mt-4">
                 <TextField
                   error={this.state.formErrors.designation.length > 0}
                   helperText={this.state.formErrors.designation}
@@ -207,7 +207,7 @@ class SignUp extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="form-group col-md-6  mt-2">
+              <div className="form-group col-md-6  mt-4">
                 <TextField
                   error={this.state.formErrors.dateOfBirth.length > 0}
                   helperText={this.state.formErrors.dateOfBirth}
@@ -222,7 +222,7 @@ class SignUp extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-group col-md-6  mt-2">
+              <div className="form-group col-md-6  mt-4">
                 <TextField
                   error={this.state.formErrors.address.length > 0}
                   helperText={this.state.formErrors.address}

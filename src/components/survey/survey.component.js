@@ -16,28 +16,23 @@ class SurveyComponent extends Component {
   handleTakeSurvey = () => {
     this.setState({
       takeSurvey: true,
-      formError: "",
     });
   };
 
   handleSubmit = () => {
-    if (this.formError === "") {
-      var answers = this.state;
-      delete answers.takeSurvey;
-      const questions = Data.map((question) => {
-        return question.question;
-      });
-      console.log(questions);
-      console.log(answers);
-      this.generatePdf(questions, answers);
-      Data.map((question) => {
-        return {
-          ...this.setState([question.id]),
-        };
-      });
-    } else {
-      console.log("invalid");
-    }
+    var answers = this.state;
+    delete answers.takeSurvey;
+    const questions = Data.map((question) => {
+      return question.question;
+    });
+    console.log(questions);
+    console.log(answers);
+    this.generatePdf(questions, answers);
+    Data.map((question) => {
+      return {
+        ...this.setState([question.id]),
+      };
+    });
   };
 
   //generates pdf based on survey filled

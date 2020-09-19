@@ -18,7 +18,7 @@ class newUser extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="row mx-0">
         <div className="col-md-2 col-sm-2"></div>
         <div className="col-md-8 col-sm-8 formStyle text-center">
           <img

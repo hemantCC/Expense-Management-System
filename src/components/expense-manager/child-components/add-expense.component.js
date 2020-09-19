@@ -49,23 +49,26 @@ class AddExpense extends Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    if (this.props.currentExpenseIndex === -1) {
-      console.log(this.state.image);
-      this.props.insertExpense(this.state);
-    } else {
-      this.props.editExpense(this.state);
-    }
-    this.setState({
-      description: "",
-      amount: "",
-      image: "",
-      formErrors: {
+    if (this.props.currentCategoryIndex !== -1) {
+      e.preventDefault();
+      if (this.props.currentExpenseIndex === -1) {
+        console.log(this.state.image);
+        this.props.insertExpense(this.state);
+      } else {
+        this.props.editExpense(this.state);
+      }
+      this.setState({
         description: "",
         amount: "",
-      },
-      updateMode: false,
-    });
+        image: "",
+        formErrors: {
+          description: "",
+          amount: "",
+        },
+        updateMode: false,
+      });
+    } else {
+    }
   };
 
   handleChange = (e) => {
@@ -190,6 +193,7 @@ const mapStateToProps = (state) => {
     currentExpenseIndex: state.selectedExpenseIndex,
     currentCategoryRemainingAmount:
       state.categories[state.selectedCategoryIndex]?.remainingAmount,
+    currentCategoryIndex: state.selectedCategoryIndex,
   };
 };
 const mapDispatchToProps = (dispatch) => {
