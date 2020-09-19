@@ -76,15 +76,6 @@ class SettingComponent extends Component {
     };
   }
 
-  componentDidUpdate = () => {
-    console.log(this.selectedCategoryIndex);
-    // if (this.state.amount !== this.props.selectedCategory.amount) {
-    //   this.setState({
-    //     amount: this.props.selectedCategory.amount,
-    //   });
-    // }
-  };
-
   handleEdit = (e) => {
     const value = e.target.value;
     this.setState({
@@ -98,6 +89,7 @@ class SettingComponent extends Component {
     this.toggleEdit();
   };
 
+  //triggers max-amount edit
   toggleEdit = () => {
     const currentMode = this.state.editMode;
     this.setState({
@@ -193,6 +185,7 @@ class SettingComponent extends Component {
   }
 }
 
+//mapping redux
 const mapStateToProps = (state) => {
   return {
     selectedCategory: state.categories[state.selectedCategoryIndex],

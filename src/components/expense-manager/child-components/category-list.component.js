@@ -54,7 +54,6 @@ function CategoryList({
                     alt="category-img"
                   />
                 )}
-                {/* <span className="ml-5">{item.isDisabled && "Disabled"}</span> */}
                 <div className="float-right ">{item.name}</div>
               </li>
             );
@@ -81,7 +80,6 @@ const mapStateToProps = (state) => {
   return {
     categories: Array.from(state.categories),
     selectedCategory: state.selectedCategoryIndex,
-    // selectedCategoryStatus: state.categories[state.selectedCategoryIndex].,
   };
 };
 

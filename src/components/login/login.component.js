@@ -97,6 +97,7 @@ class Login extends Component {
     event.preventDefault();
     if (formValid(this.state)) {
       this.props.users.map((user) => {
+        //User Authentication
         if (
           user.username === this.state.username &&
           user.password === this.state.password

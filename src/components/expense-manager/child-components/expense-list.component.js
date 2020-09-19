@@ -8,10 +8,12 @@ import {
 import React, { Component } from "react";
 
 class ExpenseList extends Component {
+  //deletes selected record
   handleDelete = (index) => {
     this.props.deleteExpense(index);
   };
 
+  //updates current expenseIndex
   handleEdit = (index) => {
     this.props.updateCurrentExpenseIndex(index);
   };
@@ -82,6 +84,7 @@ class ExpenseList extends Component {
   }
 }
 
+//mapping to redux
 const mapStateToProps = (state) => {
   return {
     expenses: state.categories[state.selectedCategoryIndex]?.expenses,
@@ -93,6 +96,7 @@ const mapStateToProps = (state) => {
       state.categories[state.selectedCategoryIndex]?.remainingAmount,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     updateCurrentExpenseIndex: (index) =>

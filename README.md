@@ -17,3 +17,4 @@ Points Considered while making assignment:
 12. No console error or warnings.
 13. GoogleAPI for google authentication.
 14. Proper naming convention
+15. Code commenting

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./shared.component.css";
 
 class Header extends Component {
+  //handles logout
   handleLogout = () => {
     localStorage.removeItem("loggedUser");
   };

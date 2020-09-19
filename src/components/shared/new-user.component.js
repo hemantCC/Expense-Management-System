@@ -11,6 +11,7 @@ class newUser extends Component {
     };
   }
 
+  //handles popup open and close
   toggleDialog = () => {
     this.setState({ setOpen: !this.state.setOpen });
   };
@@ -72,6 +73,7 @@ class newUser extends Component {
   }
 }
 
+//mapping to redux
 const mapStateToProps = (state) => {
   return {
     categories: Array.from(state.categories),

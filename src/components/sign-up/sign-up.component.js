@@ -7,8 +7,11 @@ import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 import { TextField } from "@material-ui/core";
 
+//regular expressions for email and phone number validation
 const emailRegx = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 const phoneRegx = RegExp(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/);
+
+//returns form validation status
 const validForm = (state) => {
   let valid = true;
   state.username === "" ||
@@ -20,7 +23,6 @@ const validForm = (state) => {
     ? (valid = false)
     : (valid = true);
   Object.values(state.formErrors).forEach((val) => {
-    //if error length > 0 set valid = false
     val.length > 0 && (valid = false);
   });
   return valid;
@@ -55,6 +57,7 @@ class SignUp extends Component {
     e.preventDefault();
     const { name, value } = e.target;
     const formErrors = this.state.formErrors;
+    //Validations
     switch (name) {
       case "username":
         formErrors.username =
@@ -125,6 +128,7 @@ class SignUp extends Component {
     }
   };
 
+  //senda emails for setting password link
   sendEmail = (e) => {
     emailjs
       .sendForm(

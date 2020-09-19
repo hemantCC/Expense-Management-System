@@ -23,24 +23,6 @@ class AddExpense extends Component {
   }
 
   componentDidUpdate = (previousProps, previousState) => {
-    // if (
-    //   JSON.stringify(this.props.currentExpense) !==
-    //   JSON.stringify(previousState)
-    // ) {
-    //   console.log("update state");
-    //   this.setState({
-    //     ...this.props.currentExpense,
-    //   });
-    // }
-
-    // console.log(
-    //   this.props.currentExpenseIndex !== -1 && this.state.updateMode === false
-    // );
-    // if (
-    //   this.props.currentExpenseIndex !== -1 &&
-    //   this.state.updateMode === false
-    // )
-    //   this.setState({ updateMode: true });
     if (
       this.props.currentExpenseIndex !== -1 &&
       this.state.updateMode === false
@@ -51,14 +33,9 @@ class AddExpense extends Component {
         updateMode: true,
       });
     }
-
-    // console.log(this.state);
-    // console.log(this.currentExpenseIndex);
-    // if (this.props.currentExpenseIndex !== -1) {
-    //   window.location.reload();
-    // }
   };
 
+  //returns state for Add or Edit based on condition
   returnStateProperties() {
     if (this.props.currentExpenseIndex === -1) {
       return {
@@ -94,6 +71,7 @@ class AddExpense extends Component {
   handleChange = (e) => {
     const { name, value } = e.target;
     let formErrors = this.state.formErrors;
+    //handles image selection
     if (e.target.name === "image") {
       const file = e.target.files[0];
 
@@ -105,9 +83,11 @@ class AddExpense extends Component {
       };
       reader.readAsDataURL(file);
     } else {
+      //handles description and amount selection
       const remAmount =
         Number(this.props.currentCategoryRemainingAmount) -
         Number(this.props.currentExpense?.amount);
+      //validation based on field
       switch (name) {
         case "description":
           formErrors.description =
@@ -125,7 +105,6 @@ class AddExpense extends Component {
                 Number(this.props.currentCategoryRemainingAmount)
               ? "Amount limit Exceeded"
               : "";
-
           break;
         default:
           break;
@@ -200,6 +179,8 @@ class AddExpense extends Component {
     );
   }
 }
+
+//redux mapping
 const mapStateToProps = (state) => {
   return {
     currentExpense:

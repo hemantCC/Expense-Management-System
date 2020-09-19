@@ -2,13 +2,13 @@ import { TextField } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+//validates the password and confirm password
 const formValid = (state) => {
   let valid = true;
   state.password === "" || state.confirmPassword === ""
     ? (valid = false)
     : (valid = true);
   Object.values(state.formErrors).forEach((val) => {
-    //if error length > 0 set valid = false
     val.length > 0 && (valid = false);
   });
   return valid;
@@ -31,6 +31,7 @@ class SetPassword extends Component {
     e.preventDefault();
     const { name, value } = e.target;
     let formErrors = this.state.formErrors;
+    //Validations
     switch (name) {
       case "password":
         formErrors.password =
@@ -107,6 +108,7 @@ class SetPassword extends Component {
   }
 }
 
+//mapping to redux
 const mapStateToProps = (state) => {
   return {
     users: state.users,

@@ -50,6 +50,7 @@ class AddCategory extends Component {
       };
       reader.readAsDataURL(file);
     } else {
+      //field validation
       switch (name) {
         case "name":
           formErrors.name =
@@ -147,6 +148,7 @@ class AddCategory extends Component {
   }
 }
 
+//mapping to redux
 const mapDispatchToProps = (dispatch) => {
   return {
     insertCategory: (value) => dispatch(insertCategory(value)),

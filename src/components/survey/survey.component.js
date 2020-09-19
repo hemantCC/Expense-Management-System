@@ -12,6 +12,7 @@ class SurveyComponent extends Component {
     };
   }
 
+  //shows survey form
   handleTakeSurvey = () => {
     this.setState({
       takeSurvey: true,
@@ -39,18 +40,17 @@ class SurveyComponent extends Component {
     }
   };
 
+  //generates pdf based on survey filled
   generatePdf = (question, answers) => {
     var doc = new jspdf("p", "pt");
-
     doc.text(20, 13, "User Survey");
-
     for (var i = 0; i < question.length; i++) {
       doc.text(20, 20 * (i + 2), "Question" + (i + 1) + " :" + question[i]);
     }
     for (var j = 1; j <= question.length; j++) {
       doc.text(20, 20 * (j + 8), "Answer" + j + " : " + answers[j]?.toString());
     }
-    doc.save("MySurvey.pdf");
+    doc.save("MySurvey.pdf"); // saves the pdf
   };
 
   render() {
