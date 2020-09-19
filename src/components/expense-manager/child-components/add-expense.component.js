@@ -88,8 +88,9 @@ class AddExpense extends Component {
     } else {
       //handles description and amount selection
       const remAmount =
-        Number(this.props.currentCategoryRemainingAmount) -
+        Number(this.props.currentCategoryRemainingAmount) +
         Number(this.props.currentExpense?.amount);
+      console.log(remAmount);
       //validation based on field
       switch (name) {
         case "description":
@@ -102,10 +103,11 @@ class AddExpense extends Component {
               ? "Amount required"
               : /\D/.test(value)
               ? "Only Numbers"
-              : Number(value) > remAmount
+              : Number(value) > remAmount && this.state.updateMode
               ? "Amount Exceeded "
               : Number(value) >
-                Number(this.props.currentCategoryRemainingAmount)
+                  Number(this.props.currentCategoryRemainingAmount) &&
+                !this.state.updateMode
               ? "Amount limit Exceeded"
               : "";
           break;
