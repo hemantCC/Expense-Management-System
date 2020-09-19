@@ -147,11 +147,11 @@ class SignUp extends Component {
     return (
       <div className="row mx-0">
         <div className="col-md-2"></div>
-        <div className="col-md-8 formStyle">
+        <div className="col-md-8 formStyle mx-2">
           <div className="text-center display-4">Sign Up</div>
           <form onSubmit={this.handleSubmit}>
-            <div className="row mt-4">
-              <div className="form-group col-md-6">
+            <div className="row ">
+              <div className="form-group col-md-6 mt-2">
                 <TextField
                   error={this.state.formErrors.username.length > 0}
                   helperText={this.state.formErrors.username}
@@ -163,7 +163,7 @@ class SignUp extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-6  mt-2">
                 <TextField
                   error={this.state.formErrors.email.length > 0}
                   helperText={this.state.formErrors.email}
@@ -176,8 +176,8 @@ class SignUp extends Component {
                 />
               </div>
             </div>
-            <div className="row mt-4">
-              <div className="form-group col-md-6">
+            <div className="row">
+              <div className="form-group col-md-6  mt-2">
                 <TextField
                   error={this.state.formErrors.contact.length > 0}
                   helperText={this.state.formErrors.contact}
@@ -189,7 +189,7 @@ class SignUp extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-6  mt-2">
                 <TextField
                   error={this.state.formErrors.designation.length > 0}
                   helperText={this.state.formErrors.designation}
@@ -202,8 +202,8 @@ class SignUp extends Component {
                 />
               </div>
             </div>
-            <div className="row mt-4">
-              <div className="form-group col-md-6">
+            <div className="row">
+              <div className="form-group col-md-6  mt-2">
                 <TextField
                   error={this.state.formErrors.dateOfBirth.length > 0}
                   helperText={this.state.formErrors.dateOfBirth}
@@ -218,7 +218,7 @@ class SignUp extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-6  mt-2">
                 <TextField
                   error={this.state.formErrors.address.length > 0}
                   helperText={this.state.formErrors.address}

@@ -18,6 +18,7 @@ class Dashboard extends Component {
     };
   }
 
+  //populates user details
   componentDidMount = () => {
     const user = JSON.parse(localStorage.getItem("loggedUser"));
     if (user?.isGoogleUser) {
@@ -44,8 +45,8 @@ class Dashboard extends Component {
     return (
       <div>
         <Header />
-        <div className="row mx-0 mt-4">
-          <div className="col-md-5 profile">
+        <div className="row mx-0">
+          <div className="col-md-5 profile  mt-4">
             <div className="panel">
               <div className="text-center display-4">Profile</div>
 
@@ -96,7 +97,7 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <div className="col-md-7 dashboard pl-1">
+          <div className="col-md-7 dashboard pl-1  mt-4">
             <div className="panel">
               <div className="text-center display-4 caption">
                 Welcome to Dashboard
@@ -104,12 +105,6 @@ class Dashboard extends Component {
             </div>
           </div>
         </div>
-        {/* {this.state.accessToken ? (
-          <h5>
-            Your Access Token: <br />
-            <br /> {this.state.accessToken}
-          </h5>
-        ) : null} */}
       </div>
     );
   }

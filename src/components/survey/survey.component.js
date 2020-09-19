@@ -58,7 +58,7 @@ class SurveyComponent extends Component {
       <div>
         <Header />
         <div className="row mx-0 justify-content-center">
-          <div className="col-md-11 cat-section mt-4 survey">
+          <div className="col-md-11 mx-2 cat-section mt-4 survey">
             <div className="display-4  mb-4  text-center">
               Survey
               <p>

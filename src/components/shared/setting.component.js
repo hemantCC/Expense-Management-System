@@ -123,7 +123,7 @@ class SettingComponent extends Component {
               <CategoryList />
             </div>
           </div>
-          <div className="col-md-7  pl-0 pr-3 mt-4">
+          <div className="col-md-7 px-2 pl-0 pr-2 mt-4">
             <div className="cat-section">
               <div className="text-center display-3">Settings</div>
               <Divider className="mt-4" />

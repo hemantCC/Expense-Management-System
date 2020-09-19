@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 
+//validates the form
 const formValid = (state) => {
   let valid = true;
   state.username === "" || state.password === ""
@@ -54,6 +55,7 @@ class Login extends Component {
     this.props.history.push("/dashboard");
   }
 
+  //redirection based on new user or old user
   redirection() {
     if (JSON.parse(localStorage.getItem("categories")).length === 0) {
       this.props.history.push("/newUser");
@@ -70,6 +72,8 @@ class Login extends Component {
     e.preventDefault();
     const { name, value } = e.target;
     let formErrors = this.state.formErrors;
+
+    //validations for login fields
     switch (name) {
       case "username":
         formErrors.username =
@@ -110,8 +114,10 @@ class Login extends Component {
             })
           );
           this.redirection();
+          return null;
         } else {
           console.log("username or password incorrect");
+          return null;
         }
       });
     } else {
@@ -121,7 +127,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="row w-100">
+      <div className="row mx-2">
         <div className="col-md-4 col-sm-2"></div>
         <div className="col-md-4 col-sm-8 formStyle">
           <div className="text-center display-4 mb-4">Login</div>
@@ -183,6 +189,7 @@ class Login extends Component {
   }
 }
 
+//redux mapping
 const mapStateToProps = (state) => {
   return {
     users: state.users,
