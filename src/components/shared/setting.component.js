@@ -145,7 +145,6 @@ class SettingComponent extends Component {
                         <TextField
                           label="Amount"
                           className="mt-3 ml-3"
-                          // defaultValue={this.state.amount}
                           onChange={this.handleEdit}
                         />
                         <button
